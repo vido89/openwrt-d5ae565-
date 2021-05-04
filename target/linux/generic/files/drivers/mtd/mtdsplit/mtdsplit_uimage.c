@@ -342,8 +342,15 @@ static ssize_t uimage_find_edimax(u_char *buf, size_t len)
 	}
 
 	magic = (u32 *)buf;
-	if (be32_to_cpu(*magic) != FW_MAGIC_EDIMAX)
-		return -EINVAL;
+/*	if (be32_to_cpu(*magic) != FW_MAGIC_EDIMAX)
+		return -EINVAL; */
+	
+	for (int i = 0; i < 4; i++)
+{
+         u_char* buf_pos = magic+i*sizeof(int32_t);
+    if (be32_to_cpu(*buf_pos) != FW_MAGIC_EDIMAX[i])
+        return -EINVAL;
+}
 
 	if (!uimage_verify_default(buf + FW_EDIMAX_OFFSET, len))
 		return FW_EDIMAX_OFFSET;
