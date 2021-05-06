@@ -328,7 +328,7 @@ static struct mtd_part_parser uimage_netgear_parser = {
  * Edimax
  **************************************************/
 
-#define FW_EDIMAX_OFFSET	100
+#define FW_EDIMAX_OFFSET	0x100
 /* #define FW_MAGIC_EDIMAX		0x43535953 */
 static const uint32_t FW_MAGIC_EDIMAX[] = {0x99999999, 0x44444444, 0x55555555, 0xAAAAAAAA};
 
@@ -345,12 +345,9 @@ static ssize_t uimage_find_edimax(u_char *buf, size_t len)
 /*	if (be32_to_cpu(*magic) != FW_MAGIC_EDIMAX)
 		return -EINVAL; */
 	
-	for (int i = 0; i < 4; i++)
-{
-         u_char* buf_pos = magic+i*sizeof(uint32_t);
-    if (be32_to_cpu(*buf_pos) != FW_MAGIC_EDIMAX[i])
-        return -EINVAL;
-}
+	for (i = 0; i < ARRAY_SIZE(FW_MAGIC_EDIMAX); i++)
+		if (*(magic + i) != FW_MAGIC_EDIMAX[i])
+			return -EINVAL;
 
 	if (!uimage_verify_default(buf + FW_EDIMAX_OFFSET, len))
 		return FW_EDIMAX_OFFSET;
