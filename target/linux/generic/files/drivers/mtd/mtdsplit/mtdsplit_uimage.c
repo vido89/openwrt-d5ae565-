@@ -335,10 +335,11 @@ static const uint32_t FW_MAGIC_EDIMAX[] = {0x99999999, 0x44444444, 0x55555555, 0
 static ssize_t uimage_find_edimax(u_char *buf, size_t len)
 {
 	u32 *magic;
+	int i;
 
-	if (len < FW_EDIMAX_OFFSET + sizeof(struct uimage_header)) {
-		pr_err("Buffer too small for checking Edimax header\n");
-		return -ENOSPC;
+	for (i = 0; i < ARRAY_SIZE(FW_MAGIC_EDIMAX); i++)
+		if (*(magic + i) != FW_MAGIC_EDIMAX[i])
+			return -EINVAL;
 	}
 
 	magic = (u32 *)buf;
