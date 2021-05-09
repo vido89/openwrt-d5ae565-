@@ -25,7 +25,7 @@
  * uimage_header itself is only 64B, but it may be prepended with another data.
  * Currently the biggest size is for Edimax devices: 20B + 64B
  */
-#define MAX_HEADER_LEN		84
+#define MAX_HEADER_LEN		320
 
 #define IH_MAGIC	0x27051956	/* Image Magic Number		*/
 #define IH_NMLEN		32	/* Image Name Length		*/
