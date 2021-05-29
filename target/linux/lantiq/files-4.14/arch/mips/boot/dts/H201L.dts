@@ -151,14 +151,25 @@
 			};
 
 			partition@20000 {
-				label = "uboot_env";
+				label = "defcfg";
 				reg = <0x20000 0x10000>;
 				read-only;
 			};
-
+			
 			partition@30000 {
+				label = "curcfg";
+				reg = <0x30000 0x20000>;
+			};
+			
+			partition@50000 {
+				label = "log";
+				reg = <0x50000 0x10000>;
+			};
+
+			partition@60000 {
+				compatible = "openwrt,uimage", "edimax,uimage";
 				label = "firmware";
-				reg = <0x30000 0x7d0000>;
+				reg = <0x60000 0x7a0000>;
 			};
 		};
 	};
