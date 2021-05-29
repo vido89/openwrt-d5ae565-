@@ -337,9 +337,9 @@ static ssize_t uimage_find_edimax(u_char *buf, size_t len)
 	u32 *magic;
 	int i;
 
-	for (i = 0; i < ARRAY_SIZE(FW_MAGIC_EDIMAX); i++)
-		if (*(magic + i) != FW_MAGIC_EDIMAX[i])
-			return -EINVAL;
+	if (len < FW_EDIMAX_OFFSET + sizeof(struct uimage_header)) {
+		pr_err("Buffer too small for checking Edimax header\n");
+		return -ENOSPC;
 	}
 
 	magic = (u32 *)buf;
